@@ -365,6 +365,31 @@ in
                 '';
               };
 
+              expire = lib.mkOption {
+                type = lib.types.str;
+                default = "180d";
+                description = ''
+                  The amount of time a node is authenticated with OpenID until
+                  it expires and needs to reauthenticate.
+
+                  Setting the value to "0" will mean no expiry.
+                '';
+                example = "360d";
+              };
+
+              use_expiry_from_token = lib.mkOption {
+                type = lib.types.bool;
+                default = false;
+                description = ''
+                  Use the expiry from the token received from OpenID when the
+                  user logged in. This will typically lead to frequent need to
+                  reauthenticate and should only be enabled if you know what you
+                  are doing.
+                  Note: enabling this will cause `oidc.expiry` to be ignored.
+                '';
+                example = true;
+              };
+
               scope = lib.mkOption {
                 type = lib.types.listOf lib.types.str;
                 default = [
